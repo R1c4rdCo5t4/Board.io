@@ -1,0 +1,2131 @@
+openapi: 3.0.1
+info:
+  title: Board.io
+  description: Information system for task management inspired by the Trello app
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+servers:
+  - description: Localhost server for testing API
+    url: 'http://localhost:9000/'
+tags:
+  - name: Users
+  - name: Boards
+  - name: Lists
+  - name: Cards
+paths:
+  /api/users:
+    get:
+      summary: Get all users
+      tags:
+        - Users
+      description: Returns a list of all users
+      operationId: getUsers
+      parameters:
+        - name: skip
+          in: query
+          required: false
+          description: Skip the first n users
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          required: false
+          description: Limit the number of users returned
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Create a new user
+      tags:
+        - Users
+      description: Creates a new user with the provided name and email
+      operationId: createUser
+      requestBody:
+        required: true
+        description: User to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+        '400':
+          description: Invalid request body or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '409':
+          description: The email is already in use
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    patch:
+      summary: Update a user
+      tags:
+        - Users
+      description: Updates a user with the provided name,email and password
+      operationId: updateUser
+      requestBody:
+        required: true
+        description: User to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid request body or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: The email is already in use
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      summary: Delete a user
+      tags:
+        - Users
+      description: Deletes a user with the provided id
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: User id to delete
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid request body or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /api/users/{userId}:
+    get:
+      summary: Get details of a user
+      tags:
+        - Users
+      description: Get the information about a user with the specified user ID
+      operationId: getUser
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user to get
+          required: true
+          schema:
+            type: integer
+            example: 4
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /api/users/login:
+    post:
+      summary: Login a user
+      tags:
+        - Users
+      description: Login a user with the provided username and email
+      operationId: loginUser
+      requestBody:
+        required: true
+        description: User to login
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserRequest'
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid request body or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Mismatch username and email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /api/users/token/{token}:
+    get:
+      summary: Search for users by token
+      tags:
+        - Users
+      description: Returns a list of users that match the provided token
+      operationId: searchUser
+      parameters:
+        - name: token
+          in: path
+          required: true
+          description: Search user by token
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: skip
+          in: query
+          required: false
+          description: Skip the first n users
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          required: false
+          description: Limit the number of users returned
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /api/users/name/{name}:
+    get:
+      summary: Search for users by name
+      tags:
+        - Users
+      description: Returns a list of users that match the provided name
+      operationId: searchUser
+      parameters:
+        - name: token
+          in: header
+          required: true
+          description: Search user by token
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: name
+          in: path
+          required: true
+          description: Search user by name
+          schema:
+            type: string
+            example: John
+        - name: skip
+          in: query
+          required: false
+          description: Skip the first n users
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          required: false
+          description: Limit the number of users returned
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /api/boards:
+    get:
+      summary: Get user boards
+      tags:
+        - Boards
+      description: Returns a list of boards that a user is a member of
+      operationId: getUserBoards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: userId
+          in: query
+          required: true
+          description: ID of the user to get boards for
+          schema:
+            type: string
+        - name: skip
+          in: query
+          required: false
+          description: Skip the first n boards
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          required: false
+          description: Limit the number of boards returned
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Board'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Board not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Create a new board
+      tags:
+        - Boards
+      description: Create a new board with the given name and description
+      operationId: createBoard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBoardRequest'
+      responses:
+        '201':
+          description: Board created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBoardResponse'
+        '400':
+          description: 'Invalid input, required field is missing or invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '409':
+          description: The name of the board you want already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/boards/{boardId}':
+    get:
+      summary: Get details of a board
+      tags:
+        - Boards
+      description: Get the information about a board with the specified board ID
+      operationId: getBoardDetails
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: boardId
+          in: path
+          description: ID of the board to get
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Board not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    patch:
+      summary: Update a board
+      tags:
+        - Boards
+      description: Update a board with the given name and description
+      operationId: updateBoard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: boardId
+          in: path
+          description: ID of the board to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBoardRequest'
+      responses:
+        '200':
+          description: Board updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Board not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: The name of the board you want already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      summary: Delete a board
+      tags:
+        - Boards
+      description: Delete a board with the given ID
+      operationId: deleteBoard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: boardId
+          in: path
+          description: ID of the board to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Board deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Board not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/boards/{boardId}/lists':
+    get:
+      summary: Get Board Lists
+      tags:
+        - Boards
+      description: Get all lists associated with the specified board
+      operationId: getBoardLists
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: boardId
+          in: path
+          description: ID of the board to get lists from
+          required: true
+          schema:
+            type: string
+        - name: skip
+          in: query
+          description: Number of lists to skip
+          required: false
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          description: Number of lists to return
+          required: false
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/List'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/boards/{boardId}/users':
+    get:
+      summary: Get Board Users
+      tags:
+        - Boards
+      description: Get all users associated with the specified board
+      operationId: getBoardUsers
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: boardId
+          in: path
+          description: ID of the board to get users from
+          required: true
+          schema:
+            type: string
+        - name: skip
+          in: query
+          description: Number of users to skip
+          required: false
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          description: Number of users to return
+          required: false
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/boards/{boardId}/add':
+    put:
+      summary: Add user to board
+      tags:
+        - Boards
+      description: Add a user to a specific board by board ID
+      operationId: addUserToBoard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: boardId
+          in: path
+          required: true
+          description: ID of the user to add to the board
+          schema:
+            type: string
+        - name: userId
+          in: query
+          required: true
+          description: ID of the board to add the user to
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User added to board successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid user or board ID provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: User or board not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/boards/{boardId}/remove':
+    put:
+      summary: Remove user from board
+      tags:
+        - Boards
+      description: Remove a user from a specific board by board ID
+      operationId: removeUserFromBoard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: boardId
+          in: path
+          required: true
+          description: ID of the user to remove from the board
+          schema:
+            type: string
+        - name: userId
+          in: query
+          required: true
+          description: ID of the user to remove from the board
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User removed from board successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid user or board ID provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: User or board not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /api/lists:
+    post:
+      summary: Create a new list
+      tags:
+        - Lists
+      description: Create a new list with the given name
+      operationId: createList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateListRequest'
+      responses:
+        '201':
+          description: List created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateListResponse'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '409':
+          description: The name of the list you want already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/lists/{listId}':
+    get:
+      summary: Retrieve a specific list
+      tags:
+        - Lists
+      description: Retrieve a specific list by list ID
+      operationId: getList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: listId
+          in: path
+          description: ID of the list to retrieve
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: List not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    patch:
+      summary: Update a specific list
+      tags:
+        - Lists
+      description: Update a specific list by list ID
+      operationId: updateList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: listId
+          in: path
+          description: ID of the list to update
+          required: true
+          schema:
+            type: integer
+            example: 2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateListRequest'
+      responses:
+        '200':
+          description: List updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: List not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: The name of the list you want already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      summary: Delete a specific list
+      tags:
+        - Lists
+      description: Delete a specific list by list ID
+      operationId: deleteList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: listId
+          in: path
+          description: ID of the list to delete
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: List deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: List not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/lists/{listId}/cards':
+    get:
+      summary: Get List Cards
+      tags:
+        - Lists
+      description: Retrieve all cards associated with the specified list
+      operationId: getListCards
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: listId
+          in: path
+          description: ID of the list to retrieve cards for
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: skip
+          in: query
+          description: Number of cards to skip
+          required: false
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          description: Number of cards to return
+          required: false
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Card'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/lists/{listId}/move':
+    patch:
+      summary: Move a list
+      tags:
+        - Lists
+      description: Move a list to a new position in board
+      operationId: moveList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: listId
+          in: path
+          description: ID of the list to move
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: listIdx
+          in: query
+          description: New index of the list
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: List moved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: List not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: The name of the list you want already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /api/cards:
+    post:
+      summary: Create a new card
+      tags:
+        - Cards
+      description: Create a new card with the specified name and description
+      operationId: createCard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCardRequest'
+      responses:
+        '201':
+          description: Card created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCardResponse'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/cards/{cardId}':
+    get:
+      summary: Retrieve a specific card
+      tags:
+        - Cards
+      description: Retrieve a specific card by its ID
+      operationId: getCard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: cardId
+          in: path
+          description: ID of the card to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    patch:
+      summary: Update a card
+      tags:
+        - Cards
+      description: Update a card with the specified name and description
+      operationId: updateCard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: cardId
+          in: path
+          description: ID of the card to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCardRequest'
+      responses:
+        '200':
+          description: Card updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: The name of the card you want already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      summary: Delete a card
+      tags:
+         - Search
+      description: Delete a card by its ID
+      operationId: deleteCard
+      security:
+         - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+              type: string
+              format: uuid
+              example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: cardId
+          in: path
+          description: ID of the card to delete
+          required: true
+          schema:
+              type: string
+      responses:
+        '200':
+          description: Card deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/cards/{cardId}/move':
+    patch:
+      summary: Move a card
+      tags:
+        - Cards
+      description: Move a card to a different list
+      operationId: moveCard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - in: path
+          name: cardId
+          description: ID of the card to move
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: listId
+          description: ID of the list to move the card to
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Card or list not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: You cannot move a card to the list it is already in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/cards/{cardId}/duedate':
+    patch:
+      summary: Set a due date for a card
+      tags:
+        - Cards
+      description: Set a due date for a card by its ID and given due date
+      operationId: updateCardDueDate
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - in: path
+          name: cardId
+          description: ID of the card to set a due date for
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: dueDate
+          description: Due date to set for the card
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OK'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: User not in board
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Invalid due date
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  '/api/search':
+    get:
+      summary: Search for users, boards, lists or cards
+      description: Search for a specific resource
+      operationId: search
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: ef604e80-a351-4d13-b78f-c888f3e63b60
+        - name: query
+          in: query
+          description: Name of the resource
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Type of the resource
+          required: false
+          schema:
+            type: string
+            example: users
+        - name: sortby
+          in: query
+          description: What resources will be sorted by
+          required: false
+          schema:
+            type: string
+            example: name
+        - name: orderby
+          in: query
+          description: The order of the resources
+          required: false
+          schema:
+            type: string
+            example: asc
+        - name: skip
+          in: query
+          description: The number of resources to skip
+          required: false
+          schema: 
+            type: integer
+            example: 10
+        - name: limit
+          in: query
+          description: The maximum number of resources per page
+          required: false
+          schema:
+            type: integer
+            example: 15
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '400':
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '500':
+          description: Internal server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username of the user
+          example: wartuga
+        email:
+          type: string
+          format: email
+          description: The email address of the user
+          example: wartuga@gmail.com
+    CreateUserRequest:
+      type: object
+      properties:
+        username:
+          required: true
+          type: string
+          description: The username of the user to create
+          example: wartuga
+        email:
+          required: true
+          type: string
+          format: email
+          description: The email address of the user to create
+          example: wartuga@gmail.com
+        password:
+          required: true
+          type: string
+          description: The password of the user
+          example: Pa$$w0rd
+    CreateUserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique ID of the newly created user
+          example: 2
+        token:
+          type: string
+          description: The token of the newly created user
+          example: 254e15b6-c57f-4c40-8078-6d6517b1b59b
+    UpdateUserRequest:
+      type: object
+      properties:
+        username:
+          required: false
+          type: string
+          description: The username of the user to create
+          example: wartuga
+        email:
+          required: false
+          type: string
+          format: email
+          description: The email address of the user to create
+          example: wartuga@gmail.com
+        password:
+          required: false
+          type: string
+          description: The password of the user
+          example: Pa$$w0rd
+    LoginUserRequest:
+      type: object
+      properties:
+        username:
+          required: true
+          type: string
+          description: The username of the user to login
+          example: wartuga
+        email:
+          required: true
+          type: string
+          description: The password of the user to login
+          example: wartuga@gmail.com
+    GetUser:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id of the user
+          example: 1
+    Board:
+      type: object
+      properties:
+        boardName:
+          type: string
+          description: The name of the board
+          example: LS project
+        description:
+          type: string
+          description: The description of the board
+          example: My tasks in LS project
+    CreateBoardRequest:
+      type: object
+      properties:
+        boardName:
+          required: true
+          type: string
+          description: The name of the board to create
+          example: My Board
+        description:
+          required: true
+          type: string
+          description: A description of the board
+          example: This is a board to organizing tasks
+    CreateBoardResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique ID of the newly created board
+          example: 2
+    UpdateBoardRequest:
+      type: object
+      properties:
+        boardName:
+          required: false
+          type: string
+          description: The name of the board to update
+          example: My Board
+        description:
+          required: false
+          type: string
+          description: A description of the board
+          example: This is a board to organizing tasks
+    List:
+      type: object
+      properties:
+        listName:
+          required: true
+          type: string
+          description: The name of the list
+          example: DataMem
+        boardId:
+          required: true
+          type: string
+          description: The description of the board
+          example: My tasks in LS project
+        index:
+          required: true
+          type: string
+          description: The description of the board
+          example: My tasks in LS project
+    CreateListRequest:
+      type: object
+      properties:
+        listName:
+          required: true
+          type: string
+          description: The name of the list to create
+          example: DataMem Checks
+        boardId:
+          required: true
+          type: integer
+          description: Id of the board to create the list on
+          example: 2
+    CreateListResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique ID of the newly created list
+          example: 2
+    UpdateListRequest:
+      type: object
+      properties:
+        listName:
+          required: false
+          type: string
+          description: The name of the list to update
+          example: DataMem
+        index:
+          required: false
+          type: integer
+          description: New index of the list
+          example: 2
+        archived:
+          required: false
+          type: boolean
+          description: New archived status of the list
+          example: true
+    Card:
+      type: object
+      properties:
+        cardName:
+          type: string
+          description: The name of the list
+          example: Study
+        description:
+          type: string
+          description: The description of the board
+          example: Study for the exam
+    CreateCardRequest:
+      type: object
+      properties:
+        cardName:
+          required: true
+          type: string
+          description: The name of the list to create
+          example: Study
+        description:
+          required: true
+          type: string
+          description: A description of the card
+          example: My tasks
+        listId:
+          required: true
+          type: integer
+          description: Id of the list to create the card on
+          example: 4
+    CreateCardResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique ID of the newly created card
+          example: 2
+    UpdateCardRequest:
+      type: object
+      properties:
+        cardName:
+          required: false
+          type: string
+          description: The name of the list to create
+          example: To do
+        description:
+          required: false
+          type: string
+          description: A description of the card
+          example: Check example to do
+        dueDate:
+          required: false
+          type: string
+          description: A due date of the card
+          example: 2024-03-08T17:01:32
+        archived:
+          required: false
+          type: boolean
+          description: Archive the card
+          example: true
+    OK:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Operation successfully completed
+    Created:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User created successfully
+    BadRequest:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Missing required parameter
+    NotFound:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Not found
+    Unauthorized:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Unauthorized
+    Forbidden:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Forbidden
+    Conflict:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Board already exists
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Internal Server Error

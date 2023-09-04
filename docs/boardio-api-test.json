@@ -1,0 +1,1799 @@
+{
+	"info": {
+		"_postman_id": "e59b7bad-4083-4375-96e2-38fdfe3df73f",
+		"name": "Board.io",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24263741",
+		"_collection_link": "https://lively-crater-735698.postman.co/workspace/My-Workspace~8ee96989-2199-49d2-8a00-df26e8351b1a/collection/24263741-e59b7bad-4083-4375-96e2-38fdfe3df73f?action=share&creator=24263741&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"rcosta\",\r\n    \"email\": \"rcosta@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create User",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"rcosta\",\r\n    \"email\": \"rcosta@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:17:42 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "59"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"userId\": 3,\n    \"token\": \"d76da3f7-ef01-4112-9f88-b11d60438ad3\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Board",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Tasks Board\",\r\n    \"description\": \"Board with my Tasks\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/boards",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"boards"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Board",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tasks Board\",\r\n    \"description\": \"Board with my Tasks\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/api/boards",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"boards"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:18:00 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "8"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3\n}"
+				}
+			]
+		},
+		{
+			"name": "Create List",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"To-do\",\r\n    \"boardId\": 14\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/lists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"lists"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create List",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"To-do\",\r\n    \"boardId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/api/lists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"lists"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:18:16 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "8"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 4\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Card",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Workout\",\r\n    \"description\": \"Run 2 miles\",\r\n    \"listId\": 55,\r\n    \"dueDate\": \"2024-04-08T00:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/cards",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"cards"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Card",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Workout\",\r\n    \"description\": \"Run 2 miles\",\r\n    \"listId\": 4,\r\n    \"dueDate\": \"2024-04-08T00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/api/cards",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"cards"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:18:27 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "8"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 4\n}"
+				}
+			]
+		},
+		{
+			"name": "User Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"wartuga\",\r\n    \"email\": \"wartuga@gmail.com\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "User Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"rcosta\",\r\n    \"email\": \"rcosta@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:18:42 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "59"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"userId\": 3,\n    \"token\": \"d76da3f7-ef01-4112-9f88-b11d60438ad3\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/users/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get User",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:18:48 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "55"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"username\": \"rcosta\",\n    \"email\": \"rcosta@gmail.com\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Board",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/boards/14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"boards",
+						"14"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Board",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/boards/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"boards",
+								"3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:18:58 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "65"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"name\": \"Tasks Board\",\n    \"description\": \"Board with my Tasks\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get User Boards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/boards",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"boards"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get User Boards",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/boards",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"boards"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:19:05 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "67"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 3,\n        \"name\": \"Tasks Board\",\n        \"description\": \"Board with my Tasks\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Board Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/boards/14/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"boards",
+						"14",
+						"users"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Board Users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/boards/3/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"boards",
+								"3",
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:19:15 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "57"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"username\": \"rcosta\",\n        \"email\": \"rcosta@gmail.com\",\n        \"id\": 3\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Board Lists",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/boards/14/lists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"boards",
+						"14",
+						"lists"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Board Lists",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/boards/3/lists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"boards",
+								"3",
+								"lists"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:19:23 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "62"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"name\": \"To-do\",\n        \"boardId\": 3,\n        \"id\": 4,\n        \"idx\": 0,\n        \"archived\": false\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/lists/55",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"lists",
+						"55"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get List",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/lists/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"lists",
+								"4"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:19:28 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "60"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"name\": \"To-do\",\n    \"boardId\": 3,\n    \"id\": 4,\n    \"idx\": 0,\n    \"archived\": false\n}"
+				}
+			]
+		},
+		{
+			"name": "Get List Cards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/lists/55/cards",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"lists",
+						"55",
+						"cards"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get List Cards",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/lists/4/cards",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"lists",
+								"4",
+								"cards"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:19:34 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "141"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 4,\n        \"name\": \"Workout\",\n        \"description\": \"Run 2 miles\",\n        \"listId\": 4,\n        \"idx\": 101,\n        \"createdDate\": \"2023-04-23T23:18:27\",\n        \"dueDate\": \"2024-04-08T00:00\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Card",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/cards/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"cards",
+						"10"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Card",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/cards/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"cards",
+								"4"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:19:49 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "149"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"name\": \"Workout\",\n    \"description\": \"Run 2 miles\",\n    \"listId\": 4,\n    \"idx\": 101,\n    \"createdDate\": \"2023-04-23T23:18:27\",\n    \"dueDate\": \"2024-04-08T00:00\",\n    \"archived\": false\n}"
+				}
+			]
+		},
+		{
+			"name": "Search User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/users/search?username=wartuga",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"users",
+						"search"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "wartuga"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Search User",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/users/search?username=wartuga",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "wartuga"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:19:55 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "57"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 2,\n    \"username\": \"wartuga\",\n    \"email\": \"wartuga@gmail.com\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Move Card",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/cards/1/move?listId=3&cardIdx=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"cards",
+						"1",
+						"move"
+					],
+					"query": [
+						{
+							"key": "listId",
+							"value": "3"
+						},
+						{
+							"key": "cardIdx",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Move Card",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/cards/4/move?listId=4&cardIdx=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"cards",
+								"4",
+								"move"
+							],
+							"query": [
+								{
+									"key": "listId",
+									"value": "4"
+								},
+								{
+									"key": "cardIdx",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:20:11 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "53"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Card with id 4 moved to list with id 4!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add User to Board",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/boards/2/add?userId=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"boards",
+						"2",
+						"add"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add User to Board",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/boards/3/add?userId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"boards",
+								"3",
+								"add"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:20:36 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "53"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User with id 1 added to board with id 3\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Move List",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/lists/1/move?listIdx=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"lists",
+						"1",
+						"move"
+					],
+					"query": [
+						{
+							"key": "listIdx",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Move List",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/lists/4/move?listIdx=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"lists",
+								"4",
+								"move"
+							],
+							"query": [
+								{
+									"key": "listIdx",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:21:24 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "48"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"List with id 4 moved successfully!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Card",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/cards/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"cards",
+						"3"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete Card",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/cards/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"cards",
+								"4"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:21:31 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Card with id 4 deleted!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete List",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/lists/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"lists",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete List",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/lists/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"lists",
+								"4"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:21:38 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"List with id 4 deleted!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Board",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/boards/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"boards",
+						"3"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete Board",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/api/boards/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"boards",
+								"4"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 22:22:48 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "GET, POST, PUT, DELETE, OPTIONS, TRACE, PATCH, PURGE, HEAD"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "Server",
+							"value": "Jetty(11.0.14)"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Board with id 4 deleted\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "d76da3f7-ef01-4112-9f88-b11d60438ad3",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
