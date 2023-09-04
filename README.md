@@ -39,11 +39,11 @@ The next sections of the report provide a detailed description of the functional
 
 The following diagram holds the Entity-Relationship model for the information managed by the system:
 
-![image](./diagrams/entity-relationship-model.svg)
+![image](./docs/diagrams/entity-relationship-model.svg)
 
 And this one with the Relational Model:
 
-![image](./diagrams/relational-model.svg)
+![image](./docs/diagrams/relational-model.svg)
 
 Since the board name needs to be unique in the database, if a user wants to create a board with a name
 that already exists, it is kind of frustrating for the user to have to choose a different board name.
@@ -152,7 +152,7 @@ Then, the corresponding callback function extracts and parses the
 necessary parameters from the path, query, or body of the request. In case of invalid 
 or missing parameters, an `IllegalArgumentException` is thrown immediately.
 
-![image](./diagrams/api-schema.svg)
+![image](./docs/diagrams/api-schema.svg)
 
 #### Services
 
@@ -161,7 +161,7 @@ After getting the necessary parameters, the corresponding function in the
 for example if an id is valid or if a user is authorized to perform a certain 
 action. If that is the case, the corresponding error is thrown.
 
-![image](./diagrams/services-schema.svg)
+![image](./docs/diagrams/services-schema.svg)
 
 #### Database
 
@@ -177,7 +177,7 @@ get it. After getting the database's response, the value is then returned
 back to the `AppApi`, which then sends the response in JSON format with the
 appropriate status code back to the client.
 
-![image](./diagrams/database-schema.svg)
+![image](./docs/diagrams/database-schema.svg)
 
 For efficiency reasons, only the necessary elements in the database are updated by passing null when the 
 value is not intended to be updated and passing a non-null value when it is. For that reason, since the due date
@@ -252,11 +252,11 @@ move to a different list, edit card details, and delete cards.
 
 A preview of the SPA is shown below:
 
-![image](./images/board-page.png)
+![image](./docs/images/board-page.png)
 
 The user can navigate through all the pages/components as shown in the image below:
 
-![image](./images/spa-graph.png)
+![image](./docs/images/spa-graph.png)
 
 
 ### Extra Features
